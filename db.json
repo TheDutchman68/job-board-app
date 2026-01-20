@@ -1,0 +1,18 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Frontend Developer",
+      "company": "Company A",
+      "location": "Remote",
+      "description": "React developer needed"
+    },
+    {
+      "id": 2,
+      "title": "React Junior",
+      "company": "Company B",
+      "location": "Belgium",
+      "description": "Entry level position"
+    }
+  ]
+}
