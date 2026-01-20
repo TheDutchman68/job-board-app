@@ -1,4 +1,4 @@
-import { jobs } from "../data/jobs`";
+import { jobs } from "../data/jobs";
 import JobCard from "./JobCard";
 
 
