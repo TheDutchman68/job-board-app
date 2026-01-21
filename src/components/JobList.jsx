@@ -1,5 +1,6 @@
 import {useEffect, useState } from "react";
 import JobCard from "./JobCard";
+import { useSearchParams } from "react-router-dom";
 
 
 function JobList(){
@@ -7,9 +8,12 @@ function JobList(){
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error,setError] = useState(null);
-    const [search, setSearch] = useState("");
-    const [location, setLocation] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const search = searchParams.get("search") || "";
+    const location = searchParams.get("location") || "";
+    const currentPage = Number(searchParams.get("page")) || 1;
+
+
     const jobsPerPage = 5;
 
     const indexOfLastJob = currentPage * jobsPerPage;
@@ -45,36 +49,38 @@ function JobList(){
     })
     // filtered jobs + paginate
     const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+    const totalPages = Math.ceil(filteredJobs.length/jobsPerPage);
+    const noJobsFound = filteredJobs.length === 0;
 
     return(
-        <>
+       <div className="job-list-container">
         <div>
-            <input type="text" placeholder="Search jobs..." value={search} onChange={(e) => setSearch(e.target.value)}></input>
-            <select value={location} onChange={(e) => setLocation(e.target.value)}>
+            <input type="text" placeholder="Search jobs..." value={search} onChange={(e) => setSearchParams({search: e.target.value, location,page: 1})}></input>
+            <select value={location} onChange={(e) => setSearchParams({search,location: e.target.value,page: 1})}>
             <option value="">All locations</option>
             <option value="Remote">Remote</option>
             <option value="Belgium">Belgium</option>
             </select>
 
-            {filteredJobs.length === 0 && <p>No jobs found.</p>}
+            {noJobsFound && <p>No jobs found!</p>}
 
-            {currentJobs.map(job => (
+            {currentJobs.map(job => (   
             <JobCard key={job.id} job={job}/>
             ))}
         </div>  
-        <div style={{marginTop: "20px"}}>
-        <button onClick={() => setCurrentPage(prev => Math.max(prev - 1,1))} disabled={currentPage === 1}>
+        <div className="pagination">
+        <button onClick={() => setSearchParams({search, location, page: currentPage -1 })} disabled={currentPage === 1 || noJobsFound}>
             Prev
         </button>
 
         <span style={{margin: "0 10px"}}>Page {currentPage}</span>
 
-         <button onClick={() => setCurrentPage(next => Math.min(next + 1, Math.ceil(filteredJobs.length/jobsPerPage)))} disabled={currentPage === Math.ceil(filteredJobs.length / jobsPerPage)}>
+         <button onClick={() => setSearchParams({search, location, page: currentPage + 1 })} disabled={currentPage === totalPages || noJobsFound}>
             Next
         </button>   
 
         </div>
-    </>
+    </div>
     );
 }
 
