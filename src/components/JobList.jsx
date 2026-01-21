@@ -30,6 +30,13 @@ function JobList(){
     if (loading) return <p>Loading jobs...</p>
     if (error) return <p>{error}</p>
 
+    const filteredJobs = jobs.filter((job) => {
+        const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase()) || job.company.toLowerCase().includes(search.toLowerCase());
+        const matchesLocation = location === "" || job.location === location;
+
+        return matchesSearch && matchesLocation;
+    })
+
     return(
         <div>
             <input type="text" placeholder="Search jobs..." value={search} onChange={(e) => setSearch(e.target.value)}></input>
@@ -39,9 +46,11 @@ function JobList(){
             <option value="Belgium">Belgium</option>
             </select>
 
-        {jobs.map(job => (
-        <JobCard key={job.id} job={job}/>
-        ))}
+            {filteredJobs.length === 0 && <p>No jobs found.</p>}
+
+            {filteredJobs.map(job => (
+            <JobCard key={job.id} job={job}/>
+            ))}
         </div>    
 
     );
