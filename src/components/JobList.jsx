@@ -32,6 +32,13 @@ function JobList(){
 
     return(
         <div>
+            <input type="text" placeholder="Search jobs..." value={search} onChange={(e) => setSearch(e.target.value)}></input>
+            <select value={location} onChange={(e) => setLocation(e.target.value)}>
+            <option value="">All locations</option>
+            <option value="Remote">Remote</option>
+            <option value="Belgium">Belgium</option>
+            </select>
+
         {jobs.map(job => (
         <JobCard key={job.id} job={job}/>
         ))}
