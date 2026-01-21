@@ -7,6 +7,8 @@ function JobList(){
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error,setError] = useState(null);
+    const [search, setSearch] = useState("");
+    const [location, setLocation] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:5001/jobs")
