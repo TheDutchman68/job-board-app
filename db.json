@@ -3,16 +3,72 @@
     {
       "id": 1,
       "title": "Frontend Developer",
-      "company": "Company A",
-      "location": "Remote",
-      "description": "React developer needed"
+      "company": "Techify",
+      "location": "Belgium",
+      "description": "Develop and maintain user interfaces using React."
     },
     {
       "id": 2,
-      "title": "React Junior",
-      "company": "Company B",
+      "title": "Backend Developer",
+      "company": "CodeWorks",
+      "location": "Remote",
+      "description": "Build and maintain REST APIs using Node.js."
+    },
+    {
+      "id": 3,
+      "title": "Fullstack Engineer",
+      "company": "Innovatech",
       "location": "Belgium",
-      "description": "Entry level position"
+      "description": "Work on both frontend and backend development using modern frameworks."
+    },
+    {
+      "id": 4,
+      "title": "UI/UX Designer",
+      "company": "DesignPro",
+      "location": "Remote",
+      "description": "Create intuitive user interfaces and improve user experience."
+    },
+    {
+      "id": 5,
+      "title": "React Developer",
+      "company": "Reactify",
+      "location": "Belgium",
+      "description": "Develop scalable React applications with hooks and Redux."
+    },
+    {
+      "id": 6,
+      "title": "DevOps Engineer",
+      "company": "CloudOps",
+      "location": "Remote",
+      "description": "Manage cloud infrastructure and CI/CD pipelines."
+    },
+    {
+      "id": 7,
+      "title": "Mobile App Developer",
+      "company": "AppMasters",
+      "location": "Belgium",
+      "description": "Develop cross-platform mobile apps using React Native."
+    },
+    {
+      "id": 8,
+      "title": "QA Engineer",
+      "company": "QualityFirst",
+      "location": "Remote",
+      "description": "Write automated tests and ensure software quality."
+    },
+    {
+      "id": 9,
+      "title": "Project Manager",
+      "company": "ManageIt",
+      "location": "Belgium",
+      "description": "Lead agile teams and manage project delivery."
+    },
+    {
+      "id": 10,
+      "title": "Software Engineer Intern",
+      "company": "StartTech",
+      "location": "Remote",
+      "description": "Assist in building web applications and gain experience."
     }
   ]
 }

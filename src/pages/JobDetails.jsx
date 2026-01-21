@@ -1,21 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 
 function JobDetails(){
     const { id } = useParams();
-    const [job, setJob] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const {data: job, loading, error} = useFetch(`http://localhost:5001/jobs/${id}`)
 
-    useEffect(() =>{
-        fetch(`http://localhost:5001/jobs/${id}`)
-        .then(res => res.json())
-        .then(data => {
-            setJob(data);
-            setLoading(false);
-        })
-    },[id]);
 
     if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>
     if (!job) return <p>Job not found</p>;
 
     return(      
