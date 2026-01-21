@@ -22,6 +22,22 @@ function JobList(){
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
 
+    const filteredJobs = jobs.filter((job) => {
+        const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase()) || job.company.toLowerCase().includes(search.toLowerCase());
+        const matchesLocation = location === "" || job.location === location;
+
+        return matchesSearch && matchesLocation;
+
+    })
+
+     // filtered jobs + paginate
+    const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+    const totalPages = Math.ceil(filteredJobs.length/jobsPerPage);
+    const noJobsFound = filteredJobs.length === 0;
+
+
+
+
     useEffect(() => {
         fetch("http://localhost:5001/jobs")
         .then(res => {
@@ -54,22 +70,23 @@ function JobList(){
         }, [searchInput, search, location, setSearchParams]);
 
     useEffect(() => {setSearchInput(search);},[search]);
-    
+
+    /*Handle pagination edge cases after filtering */
+    useEffect(() => {
+     if (currentPage > totalPages && totalPages > 0) {
+    setSearchParams({
+      search,
+      location,
+      page: totalPages,
+    });
+  }
+}, [currentPage, totalPages, search, location, setSearchParams]);
+
     if (loading) return <p>Loading jobs...</p>
     if (error) return <p>{error}</p>
 
-    const filteredJobs = jobs.filter((job) => {
-        const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase()) || job.company.toLowerCase().includes(search.toLowerCase());
-        const matchesLocation = location === "" || job.location === location;
-
-        return matchesSearch && matchesLocation;
-
-    })
-    // filtered jobs + paginate
-    const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-    const totalPages = Math.ceil(filteredJobs.length/jobsPerPage);
-    const noJobsFound = filteredJobs.length === 0;
-
+  
+   
     return(
        <div className="job-list-container">
         <div>
