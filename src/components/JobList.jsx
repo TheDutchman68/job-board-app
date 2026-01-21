@@ -10,6 +10,8 @@ function JobList(){
     const [error,setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const search = searchParams.get("search") || "";
+    const [searchInput, setSearchInput] = useState(search);
+    
     const location = searchParams.get("location") || "";
     const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -37,6 +39,22 @@ function JobList(){
 
     },[]);
 
+   useEffect(() => {
+        if (searchInput === search) return;
+
+        const timeout = setTimeout(() => {
+        setSearchParams({
+         search: searchInput,
+            location,
+            page: 1,
+                });
+             }, 500);
+
+            return () => clearTimeout(timeout);
+        }, [searchInput, search, location, setSearchParams]);
+
+    useEffect(() => {setSearchInput(search);},[search]);
+    
     if (loading) return <p>Loading jobs...</p>
     if (error) return <p>{error}</p>
 
@@ -55,7 +73,7 @@ function JobList(){
     return(
        <div className="job-list-container">
         <div>
-            <input type="text" placeholder="Search jobs..." value={search} onChange={(e) => setSearchParams({search: e.target.value, location,page: 1})}></input>
+            <input type="text" placeholder="Search jobs..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)}></input>
             <select value={location} onChange={(e) => setSearchParams({search,location: e.target.value,page: 1})}>
             <option value="">All locations</option>
             <option value="Remote">Remote</option>
