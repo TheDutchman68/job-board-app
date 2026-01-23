@@ -183,8 +183,8 @@ http://localhost:5173
 
 Natanael Dobie
 Frontend Developer (React)
-    - GitHub: https://github.com/TheDutchman68.
-    - LinkedIn: www.linkedin.com/in/natanael-dobie-776059249.
+- GitHub: https://github.com/TheDutchman68.
+- LinkedIn: www.linkedin.com/in/natanael-dobie-776059249.
 
 
 ## 📄 License
