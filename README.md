@@ -7,6 +7,7 @@ This project is designed as a portfolio-ready application, following best practi
 
 ## 🚀 Live Demo
 
+https://job-board-app-ivory.vercel.app
 
 ---
 
