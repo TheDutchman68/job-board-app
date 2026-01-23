@@ -1,12 +1,13 @@
 import { useParams,useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
+import Loading from "../components/Loading";
 
 function JobDetails(){
     const { id } = useParams();
     const {data: job, loading, error} = useFetch(`http://localhost:5001/jobs/${id}`)
     const navigate = useNavigate();
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading/>
     if (error) return <p>{error}</p>
     if (!job) return <p>Job not found</p>;
 
