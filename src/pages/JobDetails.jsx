@@ -4,7 +4,8 @@ import Loading from "../components/Loading";
 
 function JobDetails(){
     const { id } = useParams();
-    const {data: job, loading, error} = useFetch(`http://localhost:5001/jobs/${id}`)
+    const API_URL = "https://job-board-api-1yuc.onrender.com"
+    const {data: job, loading, error} = useFetch(`${API_URL}/jobs/${id}`)
     const navigate = useNavigate();
 
     if (loading) return <Loading/>

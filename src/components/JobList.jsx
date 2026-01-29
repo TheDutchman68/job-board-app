@@ -1,7 +1,7 @@
 import {useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import { useSearchParams } from "react-router-dom";
-
+import Loading from "../components/Loading"
 
 function JobList(){
 
@@ -16,7 +16,7 @@ function JobList(){
     const jobsPerPage = 5;
     const indexOfLastJob = currentPage * jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-
+    const API_URL = "https://job-board-api-1yuc.onrender.com";
 
     const filteredJobs = jobs.filter((job) => {
         const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase()) || job.company.toLowerCase().includes(search.toLowerCase());
@@ -35,7 +35,7 @@ function JobList(){
 
 
     useEffect(() => {
-        fetch("http://localhost:5001/jobs")
+        fetch(`${API_URL}/jobs`)
         .then(res => {
             if (!res.ok) throw new Error("Failed to fetch jobs");
             return res.json();
@@ -78,13 +78,6 @@ function JobList(){
   }
 }, [currentPage, totalPages, search, location, setSearchParams]);
 
-
-
-    if (loading) return <p>Loading jobs...</p>
-    if (error) return <p>{error}</p>
-
-  
-   
     return(
     <div className="job-list-container">
         <div>
@@ -95,10 +88,11 @@ function JobList(){
             <option value="Belgium">Belgium</option>
             </select>
 
-            {noJobsFound && <p>No jobs found!</p>}
-
+            {loading ? (<Loading></Loading>) : (<>{noJobsFound && <p>No jobs found!</p>}
             {currentJobs.map(job => (<JobCard key={job.id} job={job}/>))}
-        </div>  
+            </>)}
+            {error && <p>{error}</p>}
+         </div>  
         
         <div className="pagination">
         <button onClick={() => setSearchParams({search, location, page: currentPage -1 })} disabled={currentPage === 1 || noJobsFound}>
@@ -111,6 +105,8 @@ function JobList(){
             Next
         </button>   
         </div>
+
+
     </div>
     );
 }
