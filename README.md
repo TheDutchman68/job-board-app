@@ -3,6 +3,23 @@ A modern React Job Board application built to demonstrate real-world frontend sk
 
 This project is designed as a portfolio-ready application, following best practices used in production React apps.
 
+
+---
+
+## Live API (Mock Backend)
+This project uses a mock backend powered by JSON Server, deployed on Render.
+
+⚠️ Note:
+The backend runs on a free tier and may take a few seconds to wake up on first request.
+
+API Base URL: 
+https://job-board-api-1yuc.onrender.com
+
+Example endpoints:
+
+- GET /jobs
+- GET /jobs/:id
+
 ---
 
 ## 🚀 Live Demo
@@ -15,7 +32,7 @@ https://job-board-app-ivory.vercel.app
 
 ### ✅ Core Features
 
- - Job listing fetched from a mock REST API
+ - Job listing fetched from a live JSON API.
  - Job details page with dynamic routing
  - Client-side pagination
  - Search jobs by title or company
@@ -56,7 +73,7 @@ https://job-board-app-ivory.vercel.app
 
 1️⃣ Job Listing
 
-- Fetches job data from a REST API
+- Fetches job data from a live JSON Api 
 - Displays jobs as reusable cards
 - Handles loading and error states
 
@@ -144,8 +161,8 @@ cd job-board-app
 # Install dependencies
 npm install
 
-# Start mock API (JSON Server)
-npx json-server --watch db.json --port 5001
+# Create a `.env` file in the project root and add:
+VITE_API_URL=https://job-board-api-1yuc.onrender.com
 
 # Start development server
 npm run dev

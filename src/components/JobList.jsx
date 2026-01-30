@@ -16,7 +16,7 @@ function JobList(){
     const jobsPerPage = 5;
     const indexOfLastJob = currentPage * jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-    const API_URL = "https://job-board-api-1yuc.onrender.com";
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const filteredJobs = jobs.filter((job) => {
         const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase()) || job.company.toLowerCase().includes(search.toLowerCase());
@@ -93,6 +93,7 @@ function JobList(){
             </>)}
             {error && <p>{error}</p>}
          </div>  
+
         
         <div className="pagination">
         <button onClick={() => setSearchParams({search, location, page: currentPage -1 })} disabled={currentPage === 1 || noJobsFound}>

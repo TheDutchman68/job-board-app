@@ -4,7 +4,7 @@ import Loading from "../components/Loading";
 
 function JobDetails(){
     const { id } = useParams();
-    const API_URL = "https://job-board-api-1yuc.onrender.com"
+    const API_URL = import.meta.env.VITE_API_URL;
     const {data: job, loading, error} = useFetch(`${API_URL}/jobs/${id}`)
     const navigate = useNavigate();
 
@@ -15,8 +15,8 @@ function JobDetails(){
     return(      
         <div className="job-details">
             <h2>{job.title}</h2>
-            <p>Company: {job.company}</p>
-            <p>Description: {job.description}</p>
+            <p><strong>Company: </strong>{job.company}</p>
+            <p><strong>Description: </strong>{job.description}</p>
             <button className="back-button" onClick={() => navigate(-1)}> &larr; Back</button>
         </div>
     );
