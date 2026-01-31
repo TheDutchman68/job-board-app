@@ -213,12 +213,16 @@
 
 /*Responsive*/
 @media (max-width: 768px){
-    input, select{
+    .app select {
+    width: 100%;
+  }
+    .app input, .app select{
         font-size: 14px;
+        padding: 14px 16px;
     }
 
     .job-card{
-    padding: 12px 15px;
+    padding: 14px 18px;
     }
 
     .job-card h3{
@@ -226,7 +230,7 @@
     }
 
     .job-card p{
-        font-size: 14px;
+        font-size: 15px;
     }
     .job-details h2 {
     font-size: 24px;
@@ -236,8 +240,14 @@
   }
 
   .job-details .back-button {
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  .pagination button {
+    padding: 14px 20px;
+    font-size: 16px;
+    min-height: 44px;
   }
 
   .api-info{
@@ -249,6 +259,12 @@
 
 
 @media (max-width: 480px) {
+
+  .app input,
+  .app select {
+    font-size: 16px;
+    padding: 16px;
+  }
   .job-card h3 {
     font-size: 18px;
     text-align: center;
@@ -270,20 +286,27 @@
         gap: 10px;
     }
 
+    .pagination button {
+    padding: 16px 22px;
+    font-size: 16px;
+    min-height: 48px;
+    width: 100%;
+    }
+
     .job-details h2 {
     font-size: 20px;
-    text-align: center;
   }
 
   .job-details p {
     font-size: 14px;
-    text-align: center;
+    text-align: start;
   }
 
   .job-details .back-button {
     width: 100%;
     text-align: center;
-    padding: 10px 0;
+    font-size: 16px;
+    padding: 16px 22px;
   }
 
   .api-info{
