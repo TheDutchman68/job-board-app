@@ -1,209 +1,119 @@
 # Job Board App
-A modern React Job Board application built to demonstrate real-world frontend skills such as routing, pagination, debounced search, URL-synced state, and responsive design.
 
-This project is designed as a portfolio-ready application, following best practices used in production React apps.
+A React job board built to show real-world frontend patterns: routing, pagination, debounced search, URL-synced state, and responsive layouts — without leaning on a UI library to do the hard parts.
 
-
----
-
-## Live API (Mock Backend)
-This project uses a mock backend powered by JSON Server, deployed on Render.
-
-⚠️ Note:
-The backend runs on a free tier and may take a few seconds to wake up on first request.
-
-API Base URL: 
-https://job-board-api-1yuc.onrender.com
-
-Example endpoints:
-
-- GET /jobs
-- GET /jobs/:id
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
-https://job-board-app-ivory.vercel.app
+**[job-board-app-ivory.vercel.app](https://job-board-app-ivory.vercel.app)**
+
+> ⏳ Data comes from a mock API (JSON Server) hosted on Render's free tier. If it's been idle, the first request can take 15–20 seconds to wake up.
+
+**A note on the "API":** this isn't a real backend — it's [JSON Server](https://github.com/typicode/json-server) serving a static `db.json` file, which is a standard way to mock a REST API for frontend work. It behaves like a real API (routing, filtering, pagination all hit real HTTP requests) but there's no actual database or write persistence behind it. I'm calling that out explicitly so it's clear what this project is testing — frontend architecture, not backend design.
 
 ---
 
-## 🧠 Features Overview 
+## Features
 
-### ✅ Core Features
+**Core**
+- Job listing fetched from the mock API, with loading and error states
+- Job details page with dynamic routing (`/jobs/:id`)
+- Client-side pagination (5 jobs per page, adjusts automatically when filters reduce results)
+- Search by job title or company, filter by location
 
- - Job listing fetched from a live JSON API.
- - Job details page with dynamic routing
- - Client-side pagination
- - Search jobs by title or company
- - Filter jobs by location
+**Frontend architecture**
+- Debounced search input (500ms) to avoid firing a request on every keystroke
+- Search, filter, and pagination state synced to the URL — refresh, share the link, or hit browser back/forward, and the state holds
+- Route-based lazy loading for the Job Details page, with a custom Suspense fallback, to keep the initial bundle smaller
 
-### 🔥 Advanced Features
+---
 
-- Debounced search input (improves performance & UX)
-- URL-synced state using query parameters
-    - Pagination, search, and filters persist in the URL
-    - Browser Back / Forward navigation fully supported
-- Graceful loading and error states
-- Edge-case handling for pagination after filtering
-- Lazy loading for non-critical routes (Job Details page) to reduce initial bundle size
-- Custom loading component used as Suspense fallback for lazy-loaded routes
-
-### 🎨 UI & UX
-
-- Clean and modern UI
-- Fully responsive design (mobile, tablet, desktop)
-- Consistent layout between pages
-- Smooth navigation experience
-
---- 
-
-## 🧩 Tech Stack
+## Tech Stack
 
 - React (Hooks)
 - React Router
 - JSON Server (mock API)
-- CSS (responsive layout)
-- Vite (development & build tool)
+- CSS (responsive, no UI framework)
+- Vite
 
 ---
 
-
-## 🔍 Implemented Functionalities (Detailed)
-
-1️⃣ Job Listing
-
-- Fetches job data from a live JSON Api 
-- Displays jobs as reusable cards
-- Handles loading and error states
-
-2️⃣ Job Details Page
-
-- Dynamic route: /jobs/:id
-- Fetches job details by ID
-- Supports browser Back / Forward navigation
-
-3️⃣ Pagination
-
-- Client-side pagination
-- Displays 5 jobs per page
-- Prev / Next navigation buttons
-- Automatically adjusts when filters reduce total pages
-
-4️⃣ Search (Debounced)
-
-- Search by job title or company name
-- Debounced input (500ms delay)
-- Prevents unnecessary state updates
-
-5️⃣ Filter by Location
-
-- Dropdown filter for job location
-- Resets pagination on filter change
-
-
-6️⃣ URL-Synced State (Advanced)
-
-- Search, filter, and pagination stored in URL query params
-- Example URL:
-        ```bash
-        /?search=react&location=Remote&page=2
-        ``` 
-
-- Fully supports:
-    - Browser Back / Forward
-    - Page refresh
-    - Shareable links
-
-7️⃣ Edge Case Handling
-
-- Prevents invalid pagination states
-- Displays friendly message when no jobs are found
-
----
-
-## 📸 Screenshots
-
-### 🏠 Job List Page
-![Desktop Screenshot](./screenshots/Job-List.png)
-
-
-
-### 🔍 Search & Filter
-![Desktop Screenshot](./screenshots/Search.png)
-![Desktop Screenshot](./screenshots/Search-Filter.png)
-
-
-### 📄 Job Details Page
-![Desktop Screenshot](./screenshots/Job-Details.png)
-
-
-
-### 📱 Mobile View
-![Desktop Screenshot](./screenshots/Mobile-View.png)
-
-### 📱 Tablet View
-![Desktop Screenshot](./screenshots/Tablet-View.png)
-
----
-
-## ⚙️ Getting Started
-
-Follow the steps below to run the project locally:
+## Getting Started
 
 ```bash
 # Clone the repository
 git clone https://github.com/TheDutchman68/job-board-app
-
-# Navigate to the project folder
 cd job-board-app
 
 # Install dependencies
 npm install
-
-# Create a `.env` file in the project root and add:
-VITE_API_URL=https://job-board-api-1yuc.onrender.com
-
-# Start development server
-npm run dev
-
-# The app will be available at:
-http://localhost:5173
 ```
 
+Create a `.env` file in the project root:
+```
+VITE_API_URL=https://job-board-api-1yuc.onrender.com
+```
+
+```bash
+npm run dev
+```
+The app will be available at `http://localhost:5173`.
+
+### Running the mock API locally (optional)
+If you'd rather not depend on the hosted Render instance while developing, you can run the mock API locally using the included `db.json`:
+```bash
+npx json-server --watch db.json --port 3001
+```
+Then point `VITE_API_URL` in your `.env` to `http://localhost:3001` instead.
+
 ---
 
-## 📌 What I Learned
+## Why I built it this way
 
-- Managing state through URL query parameters
-- Implementing debounced inputs in React
-- Handling pagination edge cases
-- Building responsive layouts without UI libraries
-- Structuring a scalable React project
-- Improving UX with browser-native navigation support
-- Implementing route-based lazy loading to optimize bundle size and performance
-- Using Suspense with custom fallback components for better user experience
+The URL-synced state was the part I went back and reworked the most. My first version kept search/filter/pagination in local component state, which worked fine until I refreshed the page or hit the back button and lost everything — at that point it stopped feeling like a real app. Moving that state into the URL query params fixed it, but it meant rethinking how the components read and update state: instead of `useState`, the URL itself became the source of truth, and the components just sync to it.
 
 ---
 
-## 📈 Future Improvements
+## Future Improvements
 
 - Authentication (login / protected routes)
 - Server-side pagination
 - Saved jobs / favorites
 - Skeleton loaders
-- Real backend integration
+- A real backend instead of the JSON Server mock
 
 ---
 
-## 👤 Author
+## Screenshots
 
-Natanael Dobie
-Frontend Developer (React)
-- GitHub: https://github.com/TheDutchman68.
-- LinkedIn: www.linkedin.com/in/natanael-dobie-776059249.
+### Job List
+![Job List Screenshot](./screenshots/Job-List.png)
 
+### Search & Filter
+![Search Screenshot](./screenshots/Search.png)
+![Search Filter Screenshot](./screenshots/Search-Filter.png)
 
-## 📄 License
+### Job Details
+![Job Details Screenshot](./screenshots/Job-Details.png)
 
-This project is licensed under the MIT License.
+### Mobile / Tablet
+![Mobile Screenshot](./screenshots/Mobile-View.png)
+![Tablet Screenshot](./screenshots/Tablet-View.png)
+
+---
+
+## Author
+
+**Natanael Dobie** — Frontend Developer (React/TypeScript)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/natanael-dobie-776059249)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=flat&logo=vercel&logoColor=white)](https://portfolio-react-nu-taupe.vercel.app)
+
+## License
+
+MIT
