@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import type { Job } from "../types/job";
 
-function JobCard({job}){
+interface JobCardProps {
+  job: Job;
+}
+
+function JobCard({ job }: JobCardProps) {
     return(
         <div className="job-card">
             <h3>{job.title}</h3>
