@@ -1,8 +1,9 @@
 # Job Board App
 
-A React job board built to show real-world frontend patterns: routing, pagination, debounced search, URL-synced state, and responsive layouts — without leaning on a UI library to do the hard parts.
+A React + TypeScript job board built to show real-world frontend patterns: routing, pagination, debounced search, URL-synced state, and responsive layouts — without leaning on a UI library to do the hard parts.
 
 ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
@@ -36,6 +37,7 @@ A React job board built to show real-world frontend patterns: routing, paginatio
 ## Tech Stack
 
 - React (Hooks)
+- TypeScript
 - React Router
 - JSON Server (mock API)
 - CSS (responsive, no UI framework)
@@ -76,6 +78,8 @@ Then point `VITE_API_URL` in your `.env` to `http://localhost:3001` instead.
 ## Why I built it this way
 
 The URL-synced state was the part I went back and reworked the most. My first version kept search/filter/pagination in local component state, which worked fine until I refreshed the page or hit the back button and lost everything — at that point it stopped feeling like a real app. Moving that state into the URL query params fixed it, but it meant rethinking how the components read and update state: instead of `useState`, the URL itself became the source of truth, and the components just sync to it.
+
+**Migrating to TypeScript:** I originally built this in plain JavaScript, then migrated it to TypeScript afterward as a deliberate exercise — file by file, starting with the simplest components and working up to the ones with real state and event handling. The migration caught a real bug that had been silently working by accident: `setSearchParams` (from React Router) only accepts string values, but the pagination logic was passing `page` as a number in several places. It worked in JavaScript because of implicit type coercion, but TypeScript's type checker flagged every instance immediately.
 
 ---
 
