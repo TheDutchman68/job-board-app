@@ -1,13 +1,14 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import { useSearchParams } from "react-router-dom";
-import Loading from "../components/Loading"
+import Loading from "../components/Loading";
+import type { Job } from "../types/job";
 
-function JobList(){
+function JobList() {
 
-    const [jobs, setJobs] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error,setError] = useState(null);
+    const [jobs, setJobs] = useState<Job[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const search = searchParams.get("search") || "";
     const [searchInput, setSearchInput] = useState(search);
@@ -26,13 +27,9 @@ function JobList(){
 
     })
 
-     // filtered jobs + paginate
     const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
     const totalPages = Math.ceil(filteredJobs.length/jobsPerPage);
     const noJobsFound = filteredJobs.length === 0;
-
-
-
 
     useEffect(() => {
         fetch(`${API_URL}/jobs`)
@@ -40,12 +37,12 @@ function JobList(){
             if (!res.ok) throw new Error("Failed to fetch jobs");
             return res.json();
         })
-        .then(data => {
+        .then((data: Job[]) => {
             setJobs(data);
             setLoading(false);
         })
-        .catch(err => {
-            setError(err.message);
+        .catch((err: unknown) => {
+            setError(err instanceof Error ? err.message : "Failed to fetch jobs");
             setLoading(false);
         });
 
@@ -58,7 +55,7 @@ function JobList(){
         setSearchParams({
          search: searchInput,
             location,
-            page: 1,
+            page: String(1),
                 });
              }, 500);
 
@@ -67,13 +64,12 @@ function JobList(){
 
     useEffect(() => {setSearchInput(search);},[search]);
 
-    /*Handle pagination edge cases after filtering */
     useEffect(() => {
         if (currentPage > totalPages && totalPages > 0) {
         setSearchParams({
         search,
         location,
-        page: totalPages,
+        page: String(totalPages),
     });
   }
 }, [currentPage, totalPages, search, location, setSearchParams]);
@@ -81,8 +77,8 @@ function JobList(){
     return(
     <div className="job-list-container">
         <div>
-            <input type="text" placeholder="Search jobs..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)}></input>
-            <select value={location} onChange={(e) => setSearchParams({search,location: e.target.value,page: 1})}>
+            <input type="text" placeholder="Search jobs..." value={searchInput} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}></input>
+            <select value={location} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSearchParams({search,location: e.target.value,page: String(1)})}>
             <option value="">All locations</option>
             <option value="Remote">Remote</option>
             <option value="Belgium">Belgium</option>
@@ -94,23 +90,20 @@ function JobList(){
             {error && <p>{error}</p>}
          </div>  
 
-        
         <div className="pagination">
-        <button onClick={() => setSearchParams({search, location, page: currentPage -1 })} disabled={currentPage === 1 || noJobsFound}>
+        <button onClick={() => setSearchParams({search, location, page: String(currentPage - 1) })} disabled={currentPage === 1 || noJobsFound}>
             Prev
         </button>
         
         <span style={{margin: "0 10px"}}>Page {currentPage}</span>
         
-        <button onClick={() => setSearchParams({search, location, page: currentPage + 1 })} disabled={currentPage === totalPages || noJobsFound}>
+        <button onClick={() => setSearchParams({search, location, page: String(currentPage + 1) })} disabled={currentPage === totalPages || noJobsFound}>
             Next
         </button>   
         </div>
 
-
     </div>
     );
 }
-
 
 export default JobList;
