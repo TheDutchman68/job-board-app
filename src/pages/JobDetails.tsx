@@ -1,11 +1,12 @@
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import Loading from "../components/Loading";
+import type { Job } from "../types/job";
 
 function JobDetails(){
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const API_URL = import.meta.env.VITE_API_URL;
-    const {data: job, loading, error} = useFetch(`${API_URL}/jobs/${id}`)
+    const {data: job, loading, error} = useFetch<Job>(`${API_URL}/jobs/${id}`)
     const navigate = useNavigate();
 
     if (loading) return <Loading/>
