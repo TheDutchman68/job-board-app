@@ -6,6 +6,7 @@ A React + TypeScript job board built to show real-world frontend patterns: routi
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=flat&logo=vitest&logoColor=white)
 
 ---
 
@@ -44,6 +45,23 @@ A React + TypeScript job board built to show real-world frontend patterns: routi
 - Vite
 
 ---
+
+## Testing
+
+Tests are written with [Vitest](https://vitest.dev) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/), running in a jsdom environment.
+
+```bash
+npm test            # run all tests once
+npm run test:watch  # re-run tests on every change
+```
+
+What is covered:
+- **`useFetch` hook** — loading, success, HTTP error and network error states, with `fetch` mocked
+- **`JobCard`** — rendered content and the link to the details page
+- **`JobList`** — loading and error states, pagination (5 per page), location filter, debounced search, empty results
+- **`JobDetails`** — loading, success, error and "not found" states, the API request built from the URL id, and the Back button
+
+All API calls are mocked, so the suite runs offline and doesn't depend on the Render-hosted mock API.
 
 ## Getting Started
 
